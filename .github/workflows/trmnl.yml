@@ -38,10 +38,10 @@ jobs:
           kill $SERVE_PID || true
       - name: Crop each layout to its device-cell geometry, pad to a common canvas
         run: |
-          magick /tmp/1_full.png -crop 800x480+0+0 +repage -gravity center -background white -extent 800x480 /tmp/f1.png
-          magick /tmp/2_half_horizontal.png -crop 800x240+0+0 +repage -gravity center -background white -extent 800x480 /tmp/f2.png
-          magick /tmp/3_half_vertical.png -crop 400x480+0+0 +repage -gravity center -background white -extent 800x480 /tmp/f3.png
-          magick /tmp/4_quadrant.png -crop 400x240+0+0 +repage -gravity center -background white -extent 800x480 /tmp/f4.png
+          convert /tmp/1_full.png -crop 800x480+0+0 +repage -gravity center -background white -extent 800x480 /tmp/f1.png
+          convert /tmp/2_half_horizontal.png -crop 800x240+0+0 +repage -gravity center -background white -extent 800x480 /tmp/f2.png
+          convert /tmp/3_half_vertical.png -crop 400x480+0+0 +repage -gravity center -background white -extent 800x480 /tmp/f3.png
+          convert /tmp/4_quadrant.png -crop 400x240+0+0 +repage -gravity center -background white -extent 800x480 /tmp/f4.png
       - run: |
           cat > /tmp/concat.txt << 'EOF'
           file 'f1.png'
