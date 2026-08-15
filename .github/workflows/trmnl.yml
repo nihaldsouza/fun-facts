@@ -15,6 +15,39 @@ jobs:
       - run: gem install trmnl_preview
       - run: trmnlp lint
 
+  preview:
+    needs: lint
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+      - run: gem install trmnl_preview
+      - run: mkdir -p docs
+      - run: |
+          trmnlp serve &
+          SERVE_PID=$!
+          sleep 10
+          curl -s http://localhost:4567/render/full.png > /tmp/1_full.png
+          curl -s http://localhost:4567/render/half_horizontal.png > /tmp/2_half_horizontal.png
+          curl -s http://localhost:4567/render/half_vertical.png > /tmp/3_half_vertical.png
+          curl -s http://localhost:4567/render/quadrant.png > /tmp/4_quadrant.png
+          kill $SERVE_PID || true
+      - run: |
+          ffmpeg -loop 1 -t 2 -i /tmp/1_full.png \
+                  -loop 1 -t 2 -i /tmp/2_half_horizontal.png \
+                  -loop 1 -t 2 -i /tmp/3_half_vertical.png \
+                  -loop 1 -t 2 -i /tmp/4_quadrant.png \
+                  -filter_complex "[0][1][2][3]concat=n=4:v=1[v]; [v]split[s0][s1]; [s0]palettegen[p]; [s1][p]paletteuse" \
+                  -loop 0 docs/demo.gif -y
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: update demo GIF [skip ci]"
+          commit_options: "--no-verify"
+          file_pattern: "docs/demo.gif"
+
   push:
     needs: lint
     if: github.ref == 'refs/heads/main'
