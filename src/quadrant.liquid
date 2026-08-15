@@ -1,6 +1,13 @@
 <div class="layout">
-  <div class="markdown">
-    <span class="label">{{ text }}</span>
+  <div class="columns layout--center gap--medium">
+    <div class="column">
+      <div class="markdown">
+        <span class="label">{{ text }}</span>
+      </div>
+    </div>
+    <div class="column w--auto">
+      {% render "dog_icon", size: 56 %}
+    </div>
   </div>
 </div>
 
