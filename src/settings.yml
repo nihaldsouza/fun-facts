@@ -5,7 +5,7 @@ dark_mode: 'no'
 static_data: ''
 polling_verb: get
 framework_version: 3.2.0
-serverless_language: ''
+serverless_language: python
 polling_url: https://uselessfacts.jsph.pl/api/v2/facts/random?language=en
 polling_headers: ''
 polling_body: ''
