@@ -1,2 +1,5 @@
 # trmnlp build output
 _build/
+
+# Python
+__pycache__/

@@ -8,9 +8,11 @@ A quirky fact fetcher for TRMNL — polls [uselessfacts.jsph.pl](https://useless
 
 **Settings** (`src/settings.yml`): Configures the polling endpoint and refresh interval (60 min).
 
-**Templates**: Four Liquid layouts (`full`, `half_horizontal`, `half_vertical`, `quadrant`) render the fact text next to a small illustrated dog, defined once as a reusable `dog_icon` partial in `src/shared.liquid` and rendered at a size suited to each layout. No transform step needed — the API response fields map straight to template variables.
+**Transform** (`src/transform.py`): A small serverless step that keyword-matches each fact's text against a handful of topics (animal, ocean, space, food, body, history, science, nature) and tags it with a `category`, falling back to `general` when nothing matches.
 
-**Data flow**: `text` → `{{ text }}` in the templates.
+**Templates**: Four Liquid layouts (`full`, `half_horizontal`, `half_vertical`, `quadrant`) render the fact text next to a small icon that matches its `category` — a reusable `fact_icon` partial in `src/shared.liquid`, sized to stay out of the text's way so long facts still have room to wrap.
+
+**Data flow**: `text` → `{{ text }}`, `category` (added by the transform) → `{{ category }}` in the templates.
 
 ## Local Development
 
