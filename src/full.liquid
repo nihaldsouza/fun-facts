@@ -1,13 +1,7 @@
-<div class="layout">
-  <div class="columns layout--center gap--medium">
-    <div class="column">
-      <div class="markdown">
-        <span class="title">{{ text }}</span>
-      </div>
-    </div>
-    <div class="column w--auto">
-      {% render "fact_icon", category: category, size: 64 %}
-    </div>
+<div class="layout layout--col layout--center gap--medium">
+  {% render "fact_icon", category: category, size: 80 %}
+  <div class="markdown w--full text--center">
+    <span class="title title--xxlarge" data-value-fit="true" data-value-fit-max-height="220">{{ text }}</span>
   </div>
 </div>
 
